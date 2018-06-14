@@ -1,6 +1,6 @@
 import random as rd
 from ascii_art import print_hello
-print_hello("generating a random six digits password")
+print_hello("generating a random six digits string")
 print("There it goes! If you didn't like your password, just press any key")
 print()
 while True:
