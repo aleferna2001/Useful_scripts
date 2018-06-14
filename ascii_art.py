@@ -120,3 +120,4 @@ def make_gameboard(x,y):
         print(a*x)
         print(b*x+c)
     print(a*x)
+#make_gameboard(3,4)
