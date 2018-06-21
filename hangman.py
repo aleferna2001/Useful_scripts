@@ -91,7 +91,7 @@ while True:
             print("Você já tentou essa letra ou isso nem letra é, digite outra")
             print()
         if letra not in word:
-            print("Não tem",'"'+letra+'"','na palavra, tu quer o Norberto morto msm hein')
+            print("Não tem",'"'+letra+'"','na palavra. Porra, tu quer o Norberto morto msm hein')
             print()
             wguesses+=1 
         start=0
@@ -106,7 +106,7 @@ while True:
         print()
         print(blankstr)
         print()
-        if wguesses==4:
+        if wguesses==6:
             print('Krl, nem pra adivinhar uma palavra tu serve')
             print()
             sleep(4)
