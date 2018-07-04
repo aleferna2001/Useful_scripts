@@ -1,0 +1,32 @@
+import pygame
+from blob_class import Blob#basicamente testando a capacidade da classe Blob de ser importada como um módulo e funcionar
+
+width=800
+height=600
+
+white=(255,255,255)
+black=(0,0,0)
+red=(255,0,0)
+green=(0,255,0)
+blue=(0,0,255)
+
+colors=[black,red,green,blue]
+
+disp=pygame.display.set_mode((width,height))
+clock=pygame.time.Clock()
+
+def draw_blob():
+    pygame.draw.circle(disp,color_blob.color,[color_blob.x,color_blob.y],color_blob.size)
+
+color_blob=Blob(color=(100,100,100),size=13,pos=(400,300),mov_range=5)#a propriedade mov_range tb foi adicionada
+
+while True:
+    for event in pygame.event.get():
+        if event.type==pygame.QUIT:
+            pygame.quit()
+            quit
+    disp.fill(white)
+    draw_blob()
+    color_blob.move()
+    pygame.display.update()
+    clock.tick(60)
