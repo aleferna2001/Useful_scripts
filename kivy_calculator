@@ -16,6 +16,7 @@ class MainWindow(GridLayout):#a janela principal é um layout grid que contém 4
         self.spacing=5#spacing é o espaço das childs de widget entre si
         self.entry=TextInput(font_size=30,multiline=False,cursor_color=(0,0,0,1))
         self.add_widget(self.entry)
+        self.entry.bind(text=self.on_text)
         #criando os layouts box
         self.box1 = Box1()
         self.box1.button1.bind(on_press=self.add_text)#a função só é setada aki porque n se pode acessar propriedades de classes a partir de outras classes
@@ -48,28 +49,30 @@ class MainWindow(GridLayout):#a janela principal é um layout grid que contém 4
         self.add_widget(self.box4)
 
 
-    def add_text(self,obj):
-        self.entry.foreground_color=(0,0,0,1)
-        self.entry.text+=obj.text
-        
-    def clear_text(self,obj):
+    def on_text(self,instance,value):#self é MainWindow, instance é self.entry e value é self.entry.text
+        instance.foreground_color=(0,0,0,1)
+
+    def add_text(self,instance):
+        self.entry.text+=instance.text
+
+    def clear_text(self,instance):
         self.entry.text=''
-        
-    def calculate(self,obj):#IF OTHERS CAN INPUT DATA, USING EVAL IS SUPER DANGEROUS, AS PEOPLE CAN RUN COMMANDS THROUGH YOUR SCRIPT
-        self.entry.foreground_color=(0,0,0,1)
-        calculable=True
-        for i in string.ascii_lowercase:
-            if i in self.entry.text:
-                calculable=False
-        if calculable:
-            if '*/' in self.entry.text or '/*' in self.entry.text:
-                self.entry.text='TypeError'
-                self.entry.foreground_color=(1,0,0,1)
-            else:
-                self.entry.text=str(eval(self.entry.text))
+
+    def output_error(self):
+        self.entry.text='TypeError'
+        self.entry.foreground_color=(1,0,0,1)
+
+    def calculate(self,instance):#IF OTHERS CAN INPUT DATA, USING EVAL IS SUPER DANGEROUS, AS PEOPLE CAN RUN COMMANDS THROUGH YOUR SCRIPT
+        if any(i in self.entry.text for i in string.ascii_lowercase):
+            self.output_error()
         else:
-            self.entry.text='TypeError'
-            self.entry.foreground_color=(1,0,0,1)
+            if any(t==self.entry.text[-1] for t in ['+','-','*','/']):
+                self.output_error()
+            else:
+                if '*/' in self.entry.text or '/*' in self.entry.text:
+                    self.output_error()
+                else:
+                    self.entry.text=str(eval(self.entry.text))
 
 class NumBox(BoxLayout):#definindo um padrão para as box que contém 3 números e um sinal
     def __init__(self,x=0,**kwargs):#o x se refere a uma soma para que o texto dos botões estejam corretos
